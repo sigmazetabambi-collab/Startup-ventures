@@ -1,0 +1,2 @@
+# Startup-ventures
+First draft 
