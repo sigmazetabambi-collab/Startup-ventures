@@ -1,0 +1,48 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Syndicate Router</title>
+</head>
+<body>
+<div id="status">Initializing secure routing engine...</div>
+
+<script>
+// Replace with your actual Published Google Sheets CSV URL
+const SHEET_CSV_URL = "https://www.google.com/url?q=https://docs.google.com/spreadsheets/d/e/YOUR_ID/pub?output%3Dcsv&source=gmail&ust=1792689067302000&sa=E";
+
+async function initRouter() {
+try {
+const response = await fetch(SHEET_CSV_URL);
+const data = await response.text();
+
+// Split by rows and isolate cell A1
+const rows = data.split('
+');
+if (rows.length === 0 || !rows) {
+throw new Error("Empty cell configuration.");
+}
+
+// Clean the isolated row data
+const targetMirror = rows[0].split(',')[0].replace(/["'\r]/g, "").trim();
+
+if (targetMirror && targetMirror.startsWith("http")) {
+document.getElementById("status").innerText = "Redirecting to secure mirror...";
+window.location.replace(targetMirror);
+} else {
+document.getElementById("status").innerText = "Error: Invalid or unconfigured routing destination.";
+}
+} catch (error) {
+console.error("Routing Exception:", error);
+document.getElementById("status").innerText = "Network execution failure. System offline.";
+}
+}
+
+// Execute engine instantly upon page mount
+initRouter();
+</script>
+</body>
+</html>
+```
